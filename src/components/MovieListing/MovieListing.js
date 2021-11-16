@@ -1,7 +1,29 @@
 import React from "react";
+import "./MovieListing.scss";
+import { useSelector } from "react-redux";
+import MovieCard from "../MovieCard/MovieCard";
 
 const MovieListing = () => {
-  return <div>MovieListing</div>;
+  const movies = useSelector((state) => state.movies.movies);
+
+  console.log(movies);
+
+  return (
+    <div className="movie-wrapper">
+      <div className="movie-list">
+        <h2>Movies</h2>
+        <div className="movie-container d-flex flex-wrap">
+          {movies.Response === "True" &&
+            movies.Search.map((item) => <MovieCard data={item} />)}
+          {!movies.Response === "True" && (
+            <div className="movies-error">
+              <h3> {movies.Error} </h3>
+            </div>
+          )}
+        </div>
+      </div>
+    </div>
+  );
 };
 
 export default MovieListing;
